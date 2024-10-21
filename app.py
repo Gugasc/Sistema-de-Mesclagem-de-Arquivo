@@ -3,7 +3,7 @@ import os  # Manipular arquivos/pastas
 
 print("Iniciando o programa")
 # Caminho da pasta com os arquivos
-pasta = r"C:\VS CODE\Projeto - 1\data"
+pasta = "Sistema-de-Mesclagem-de-Arquivo\data"
 
 # Lista com todos os arquivos dentro da pasta.
 # os.path.join: vai juntar todos os caminhos na variável "pasta" para a coleta do arquivo;
@@ -15,7 +15,7 @@ tabelaFinal = pd.DataFrame()
 
 # tabela = pd.read_excel(arquivos[0], index_col="Data") ; o index_col pode ser usado para tornar uma coluna em um indice
 
-vendas1 = pd.read_excel(r"C:\VS CODE\Projeto - 1\data\Vendas - 1.xlsx")
+vendas1 = pd.read_excel("Sistema-de-Mesclagem-de-Arquivo\data\Vendas - 1.xlsx")
 # Loop para passar em todos os arquivos e ir juntando na tabela final
 for arquivo in arquivos:
     #Vai ler cada arquivo em excel presente na pasta 
@@ -34,22 +34,29 @@ for arquivo in arquivos:
 
 print("MESCLAGEM FEITA")
 
-tabelaFinal.to_excel(r"C:\VS CODE\Projeto - 1\Dados_Finais\Vendas Totais.xlsx")
+tabelaFinal.to_excel("Sistema-de-Mesclagem-de-Arquivo\Dados_Finais\Vendas Totais.xlsx")
 print("Criação de tabela final, concluida")
 
-gerentes = pd.read_excel(r"C:\VS CODE\Projeto - 1\data\Gerentes.xlsx")
+gerentes = pd.read_excel("Sistema-de-Mesclagem-de-Arquivo\data\Gerentes.xlsx")
 
 #junta duas tabelas, usando como base os valores semelhantes entre elas (como um procv)
 tabelaFinal = pd.merge(tabelaFinal, gerentes)
 
 #vai excluir todas as colunas com valores vazios
 tabelaFinal = tabelaFinal.dropna(how = 'all', axis=1)
-tabelaFinal.to_excel(r"C:\VS CODE\Projeto - 1\Dados_Finais\Vendas Merge.xlsx")
-print("Criação de tabela final com os gerentes, concluida")
+try:
+    tabelaFinal.to_excel("Sistema-de-Mesclagem-de-Arquivo\Dados_Finais\Vendas Merge.xlsx")
+    print("Criação de tabela final com os gerentes, concluida")
+except Exception as e:
+    print(f"Erro:{e}")
 
 #vai realizar atransformação do arquivo para .json
-tabelaFinal.to_json("Teste.json")
-print("Criação de arquivo .JSON, concluido")
+try:
+    tabelaFinal.to_json("Teste.json")
+    print("Criação de arquivo .JSON, concluido")
+except Exception as e:
+    print(f"Erro:{e}")
+
 
 # Criação de variável com um id de loja específico
 vendasIguatemiEsp = tabelaFinal.loc[tabelaFinal["ID Loja"] == "Iguatemi Esplanada"]

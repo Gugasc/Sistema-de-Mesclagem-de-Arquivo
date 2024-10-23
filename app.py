@@ -19,8 +19,8 @@ vendas1 = pd.read_excel("data\\Vendas - 1.xlsx")
 
 def checar_colunas(col_aux, col_vendas):
     colunas_diferentes = []
-    for nome in col_aux:
-        if nome != col_vendas.pop():
+    for nome in col_vendas:
+        if nome != [nome_coluna_aux and print(nome_coluna_aux) for nome_coluna_aux in col_aux]:
             colunas_diferentes.append(nome)
         else:
             return False
@@ -34,11 +34,13 @@ for arquivo in arquivos:
     #colunas = aux.columns.tolist() #obtem o nome de cada coluna do Dataframe
     colunas_vendas1 = vendas1.columns.tolist()
     colunas_aux = aux.columns.tolist()
-    #print(colunas_aux)
+    print(colunas_aux)
     #print(colunas_vendas1)
 
     if checar_colunas(col_aux=colunas_aux, col_vendas=colunas_vendas1):
         print("Checagem concluida, colunas totalmente diferentes")
+        df = pd.read_excel(arquivo)
+        tabelaFinal = pd.concat([tabelaFinal, df], ignore_index= True)
     else:
         print("Falha na checagem, colunas iguais.")
         break
